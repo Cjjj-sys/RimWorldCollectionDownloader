@@ -1,0 +1,60 @@
+﻿<Window x:Class="RimWorldCollectionDownloader.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:RimWorldCollectionDownloader"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="100*"/>
+        </Grid.RowDefinitions>
+        <Border Grid.Row="0" Background="AliceBlue">
+            <TextBlock Text="Menu" HorizontalAlignment="Center"/>
+        </Border>
+        <Border Grid.Row="1">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="25*"/>
+                    <ColumnDefinition Width="50*"/>
+                    <ColumnDefinition Width="25*"/>
+                </Grid.ColumnDefinitions>
+                <Border Grid.Column="0">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="30" />
+                            <RowDefinition Height="100*"/>
+                        </Grid.RowDefinitions>
+                        <Border Grid.Row="0">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="100*"/>
+                                    <ColumnDefinition Width="30"/>
+                                </Grid.ColumnDefinitions>
+                                <Border Grid.Column="0">
+                                    <TextBox Margin="2"/>
+                                </Border>
+                                <Border Grid.Column="1">
+                                    <Button x:Name="SearchButton" Click="SearchButton_Click" Content="O" FontSize="16" Margin="2,2,0,2" HorizontalAlignment="Left" Width="26"/>
+                                </Border>
+                            </Grid>
+                        </Border>
+                        <Border Grid.Row="1">
+                            <ListView x:Name="WorkshopItemsListView">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate DataType="local:Publishedfiledetail">
+                                        <Border Margin="1">
+                                            <TextBlock Text="{Binding title}"/>
+                                        </Border>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                        </Border>
+                    </Grid>
+                </Border>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>
