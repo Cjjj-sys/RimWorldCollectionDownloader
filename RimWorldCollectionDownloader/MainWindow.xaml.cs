@@ -1,4 +1,6 @@
-﻿using System.Text;
+﻿using System;
+using System.Text;
+using System.Text.Json;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -39,12 +41,61 @@ namespace RimWorldCollectionDownloader
             WorkshopItemsListView.Items.Clear();
             WorkshopItemsListView.ItemsSource = publishedfiledetails;
         }
-        private void SearchButton_Click(object sender, RoutedEventArgs e)
+        private async void SearchButton_Click(object sender, RoutedEventArgs e)
         {
+            SearchButton.IsEnabled = false;
             var testPublishedfiles = new Publishedfiledetails {
                 new Publishedfiledetail { title = "test"} ,
             new Publishedfiledetail {title = "test2"} };
-            publishedfiledetails = testPublishedfiles;
+            var id = CollectionIdTextBox.Text;
+            if (id == null || id == "")
+            {
+                MessageBox.Show($"id is null", "error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+            try
+            {
+                var testCollection = await Utils.GetWorkShopCollectionAsync(id);
+                if (testCollection == null)
+                {
+                    MessageBox.Show($"id is invalid", "error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+                var testItems = (await Utils.GetWorkShopItemsAsync(testCollection)).ToList();
+                if (testItems == null)
+                {
+                    MessageBox.Show($"id is invalid", "error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+                testPublishedfiles = new Publishedfiledetails(testItems);
+                publishedfiledetails = testPublishedfiles;
+            }
+            catch (ArgumentNullException exception)
+            {
+                MessageBox.Show($"id is invalid\n{exception.Message}", "error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+            finally
+            {
+                if (!SearchButton.IsEnabled)
+                {
+                    SearchButton.IsEnabled = true;
+                }
+            }
+        }
+
+        private void WorkshopItemsListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            var item = WorkshopItemsListView.SelectedItem as Publishedfiledetail;
+            if (item != null)
+            {
+                ItemDetailsTextBox.Text = item.description;
+            }
+
+            if (!SearchButton.IsEnabled)
+            {
+                SearchButton.IsEnabled = true;
+            }
         }
     }
 }

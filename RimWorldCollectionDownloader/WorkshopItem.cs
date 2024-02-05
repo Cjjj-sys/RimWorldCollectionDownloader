@@ -20,7 +20,11 @@ namespace RimWorldCollectionDownloader
 
     public class Publishedfiledetails : List<Publishedfiledetail>
     {
-
+        public Publishedfiledetails(List<Publishedfiledetail> publishedfiledetails)
+        {
+            publishedfiledetails.ForEach(e => { this.Add(e); });
+        }
+        public Publishedfiledetails() {}
     }
     public class Publishedfiledetail
     {

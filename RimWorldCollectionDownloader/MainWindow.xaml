@@ -34,7 +34,7 @@
                                     <ColumnDefinition Width="30"/>
                                 </Grid.ColumnDefinitions>
                                 <Border Grid.Column="0">
-                                    <TextBox Margin="2"/>
+                                    <TextBox x:Name="CollectionIdTextBox" Margin="2"/>
                                 </Border>
                                 <Border Grid.Column="1">
                                     <Button x:Name="SearchButton" Click="SearchButton_Click" Content="O" FontSize="16" Margin="2,2,0,2" HorizontalAlignment="Left" Width="26"/>
@@ -42,7 +42,7 @@
                             </Grid>
                         </Border>
                         <Border Grid.Row="1">
-                            <ListView x:Name="WorkshopItemsListView">
+                            <ListView x:Name="WorkshopItemsListView" MouseDoubleClick="WorkshopItemsListView_MouseDoubleClick">
                                 <ListView.ItemTemplate>
                                     <DataTemplate DataType="local:Publishedfiledetail">
                                         <Border Margin="1">
@@ -52,6 +52,18 @@
                                 </ListView.ItemTemplate>
                             </ListView>
                         </Border>
+                    </Grid>
+                </Border>
+                <Border Grid.Column="1">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="100*"/>
+                            <RowDefinition Height="20"/>
+                        </Grid.RowDefinitions>
+                        <TextBox x:Name="ItemDetailsTextBox"/>
+                        <StackPanel Grid.Row="1">
+                            <Button Margin="1" Content="Download"/>
+                        </StackPanel>
                     </Grid>
                 </Border>
             </Grid>
