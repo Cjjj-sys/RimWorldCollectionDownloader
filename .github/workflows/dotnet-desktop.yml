@@ -87,5 +87,5 @@ jobs:
     - name: Upload build artifacts
       uses: actions/upload-artifact@v3
       with:
-        name: Build
+        name: Debug
         path: RimWorldCollectionDownloader\bin\Debug
