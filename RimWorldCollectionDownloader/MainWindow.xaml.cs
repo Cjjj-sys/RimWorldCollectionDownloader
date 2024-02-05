@@ -51,26 +51,20 @@ namespace RimWorldCollectionDownloader
             if (id == null || id == "")
             {
                 MessageBox.Show($"id is null", "error", MessageBoxButton.OK, MessageBoxImage.Error);
+                if (!SearchButton.IsEnabled)
+                {
+                    SearchButton.IsEnabled = true;
+                }
                 return;
             }
             try
             {
                 var testCollection = await Utils.GetWorkShopCollectionAsync(id);
-                if (testCollection == null)
-                {
-                    MessageBox.Show($"id is invalid", "error", MessageBoxButton.OK, MessageBoxImage.Error);
-                    return;
-                }
                 var testItems = (await Utils.GetWorkShopItemsAsync(testCollection)).ToList();
-                if (testItems == null)
-                {
-                    MessageBox.Show($"id is invalid", "error", MessageBoxButton.OK, MessageBoxImage.Error);
-                    return;
-                }
                 testPublishedfiles = new Publishedfiledetails(testItems);
                 publishedfiledetails = testPublishedfiles;
             }
-            catch (ArgumentNullException exception)
+            catch (Exception exception)
             {
                 MessageBox.Show($"id is invalid\n{exception.Message}", "error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
